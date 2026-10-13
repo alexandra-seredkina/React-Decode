@@ -52,6 +52,10 @@ decoded-example.com/
 └── src/           исходники, если нашлась source map
 ```
 
+<p align="center">
+  <img src="docs/cli.jpg" alt="Как выглядит запуск" width="80%">
+</p>
+
 ## Пример
 
 **Было**
@@ -86,6 +90,10 @@ async function load() {
 > Большинство приложений не вызывают `fetch` напрямую: есть функция `request(method, path, body)` и объект
 > `api` вокруг неё. `react-decode` находит такие обёртки любой вложенности и разворачивает каждый вызов в
 > конкретный URL.
+
+<p align="center">
+  <img src="docs/output.jpg" alt="Результат: <code>report.md</code>" width="100%">
+</p>
 
 ## Опции
 

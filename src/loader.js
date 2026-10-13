@@ -64,7 +64,8 @@ function htmlScripts(html, baseUrl) {
 }
 
 export async function loadInput(input, opts = {}) {
-  const { followChunks = true, maxFiles = 150, headers = {}, log = () => {} } = opts;
+  const { followChunks = true, maxFiles = 150, headers = {}, onProgress = () => {} } = opts;
+  let bytes = 0;
   const result = { origin: null, entries: [], maps: [], notes: [] };
   const usedNames = new Set();
   const queue = [];
@@ -163,7 +164,8 @@ export async function loadInput(input, opts = {}) {
     }
     if (!r.ok || looksLikeHtml(r.text)) continue; // SPA fallback => not a real file
     fetched++;
-    log(`  fetched ${url} (${r.text.length} bytes)`);
+    bytes += r.text.length;
+    onProgress({ phase: 'download', done: fetched, total: fetched + queue.length, bytes });
     const name = path.basename(new URL(url).pathname) || 'bundle.js';
     push({ name, code: r.text, kind: 'js', url });
     if (!result.origin) result.origin = new URL(url).origin;

@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { run } from './pipeline.js';
+import { createUi } from './ui.js';
 
 const HELP = `react-decode — reverse-engineer compiled React bundles
 
@@ -94,7 +95,15 @@ export async function main(argv) {
     }
     opts.out = `decoded-${base.replace(/[^\w.-]+/g, '_')}`;
   }
-  opts.log = quiet || json ? () => {} : (m) => console.error(m);
+  const ui = createUi(!(quiet || json));
+  ui.banner();
+  opts.log = (m) => ui.step(m);
+  opts.onProgress = (p) => ui.progress(p);
+  opts.onFinishDownload = (n) => {
+    ui.finish();
+    ui.step(`decoding ${n} file${n === 1 ? '' : 's'}`);
+  };
+  opts.onFinishDecode = () => ui.finish();
 
   const { outDir, report } = await run(input, opts);
   if (json) {

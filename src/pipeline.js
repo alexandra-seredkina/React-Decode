@@ -58,9 +58,9 @@ export async function processCode(name, code, opts = {}) {
 }
 
 export async function run(input, opts) {
-  const o = { rename: true, prettier: true, followChunks: true, maxFiles: 150, headers: {}, log: () => {}, ...opts };
+  const o = { rename: true, prettier: true, followChunks: true, maxFiles: 150, headers: {}, log: () => {}, onProgress: () => {}, ...opts };
   const outDir = path.resolve(o.out);
-  o.log(`loading ${input}`);
+  o.log(`fetching ${input}`);
   const loaded = await loadInput(input, o);
   if (!loaded.entries.some((e) => e.kind === 'js') && !loaded.maps.length) {
     throw new Error('no JavaScript found in input');
@@ -68,13 +68,17 @@ export async function run(input, opts) {
 
   const results = [];
   const sourceResults = [];
-  for (const entry of loaded.entries) {
-    if (entry.kind !== 'js') continue;
-    o.log(`decoding ${entry.name} (${(entry.code.length / 1024).toFixed(0)} KiB)`);
+  const jsEntries = loaded.entries.filter((e) => e.kind === 'js');
+  o.onFinishDownload?.(jsEntries.length);
+  let decoded = 0;
+  for (const entry of jsEntries) {
+    o.onProgress({ phase: 'decode', done: decoded, total: jsEntries.length });
     const r = await processCode(entry.name, entry.code, o);
     await write(path.join(outDir, 'decoded', entry.name), r.decoded ?? '');
     results.push(r);
+    o.onProgress({ phase: 'decode', done: ++decoded, total: jsEntries.length });
   }
+  o.onFinishDecode?.();
 
   // original sources recovered from source maps
   for (const { forName, map } of loaded.maps) {

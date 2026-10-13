@@ -53,6 +53,10 @@ decoded-example.com/
 └── src/           original sources, if a source map was found
 ```
 
+<p align="center">
+  <img src="docs/cli.jpg" alt="Running it" width="80%">
+</p>
+
 ## Example
 
 **Before**
@@ -86,6 +90,10 @@ async function load() {
 
 > Most apps never call `fetch` directly. They have a `request(method, path, body)` helper and an `api`
 > object around it. `react-decode` finds such wrappers at any depth and resolves every call to a concrete URL.
+
+<p align="center">
+  <img src="docs/output.jpg" alt="What you get: <code>report.md</code>" width="100%">
+</p>
 
 ## Options
 
