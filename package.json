@@ -1,0 +1,19 @@
+{
+  "name": "react-decode",
+  "version": "0.1.0",
+  "description": "Reverse-engineering toolkit for compiled/minified React (Vite, webpack, CRA, Next) bundles: pretty-print, rename, extract API calls, routes, env vars and secrets.",
+  "type": "module",
+  "bin": { "react-decode": "bin/react-decode.js" },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/generator": "^8.0.6",
+    "@babel/parser": "^8.0.7",
+    "@babel/traverse": "^8.0.7",
+    "@babel/types": "^8.0.6",
+    "prettier": "^3.9.10"
+  }
+}
