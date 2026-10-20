@@ -14,6 +14,7 @@
 </p>
 
 <p align="center">
+  <a href="https://awesomerea.org/resources/react-decode/"><img src="https://raw.githubusercontent.com/reacher-z/Awesome-REA/477658fa73f6860e86cd1fc526657c2efdc25194/assets/featured-by-awesome-rea-inline.svg" alt="Featured by Awesome REA"></a>
   <img alt="node" src="https://img.shields.io/badge/node-%E2%89%A520-E8334A?style=flat-square&labelColor=0B0C0F">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-E8334A?style=flat-square&labelColor=0B0C0F">
 </p>
